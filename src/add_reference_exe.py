@@ -4,12 +4,14 @@ import io
 import os
 from variables import EXCEL_FILENAME
 
-def add_reference_exe(encoded_data: str, filename: str=EXCEL_FILENAME) -> object:
+def add_reference_exe(encoded_data: str, col_to_drop: list[str],filename: str=EXCEL_FILENAME) -> object:
     """
     save the refenrence excel data
 
     :param encoded_data: Base64 encoded string of the referenced Excel file.
     :type encoded_data: str
+    :param col_to_drop: list of unwanted columns
+    :type col_to_drop: list[str]
     :param filename: the filename for saving (e.g., 'report.xlsx').
     :type filename: str
     :return: metadata object of file location
@@ -23,6 +25,10 @@ def add_reference_exe(encoded_data: str, filename: str=EXCEL_FILENAME) -> object
         with io.BytesIO(decoded_bytes) as excel_stream:
             df = pd.read_excel(excel_stream)
 
+            # drop unwanted columns
+            if len(col_to_drop) > 0:
+                df = df.drop(columns=[*col_to_drop])
+                
             # Step 4: Save it into excel
             df.to_excel(filename, index=False)
 
@@ -32,13 +38,15 @@ def add_reference_exe(encoded_data: str, filename: str=EXCEL_FILENAME) -> object
 
         return {
             'status': 'success',
-            'status': 'success',
             'statuscode': 200,
-            'ref_filepath': file_path,
+            'message': 'Reference excelsheet updated successfully.',
+            'body': {
+                'ref_filepath': file_path
+                }
         }
     except Exception as e:
         return {
                 'status': 'error',
-                'message': f"Error saving the refenrence excel file: {str(e)}",
                 'statusCode': 500,
+                'message': f"Error saving the refenrence excel file: {str(e)}"
             }

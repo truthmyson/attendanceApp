@@ -7,7 +7,7 @@ import io
 async def download_single_csv(
             Session: ClientSession,
             url: str,
-            col_to_drop: list[str]=['first name', 'last name']
+            col_to_drop: list[str]
             ) -> object:
     """
     Download a single excelsheet as csv file
@@ -38,6 +38,7 @@ async def download_single_csv(
                     csv_file = io.StringIO(data)
                     df = pd.read_csv(csv_file)
                     
+                    # drop unwanted column
                     if len(col_to_drop) > 0:
                         df = df.drop(columns=[*col_to_drop])
 

@@ -10,10 +10,10 @@ if __name__ == '__main__':
 
     payload = {}
     urls = [
-        'https://docs.google.com/spreadsheets/d/1PEGLTMaVzt-Ed2DWHPCjWHVVtlPyWMqERtGh40S-_zQ/edit?resourcekey=&gid=1269987887#gid=1269987887',
-        'https://docs.google.com/spreadsheets/d/1PEGLTMaVzt-Ed2DWHPCjWHVVtlPyWMqERtGh40S-_zQ/edit?resourcekey=&gid=285255461#gid=285255461',
-        'https://docs.google.com/spreadsheets/d/1PEGLTMaVzt-Ed2DWHPCjWHVVtlPyWMqERtGh40S-_zQ/edit?resourcekey=&gid=1260299904#gid=1260299904',
-        '://docs.google.com/spreadsheets/d/1PEGLTMaVzt-Ed2DWHPCjWHVVtlPyWMqERtGh40S-_zQ/edit?resourcekey=&gid=1260299904#gid=1260299904'
+        "https://docs.google.com/spreadsheets/d/1PEGLTMaVzt-Ed2DWHPCjWHVVtlPyWMqERtGh40S-_zQ/edit?resourcekey=&gid=1269987887#gid=1269987887",
+        "https://docs.google.com/spreadsheets/d/1PEGLTMaVzt-Ed2DWHPCjWHVVtlPyWMqERtGh40S-_zQ/edit?resourcekey=&gid=285255461#gid=285255461",
+        "https://docs.google.com/spreadsheets/d/1PEGLTMaVzt-Ed2DWHPCjWHVVtlPyWMqERtGh40S-_zQ/edit?resourcekey=&gid=1260299904#gid=1260299904",
+        "://docs.google.com/spreadsheets/d/1PEGLTMaVzt-Ed2DWHPCjWHVVtlPyWMqERtGh40S-_zQ/edit?resourcekey=&gid=1260299904#gid=1260299904"
     ]
     payload['urls'] = urls
     payload['ref_exe'] = ''
