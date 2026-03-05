@@ -3,7 +3,7 @@ import { useState } from 'react';
 import '../styles/GenerateReport.css';
 import { FaSpinner } from 'react-icons/fa';
 
-const API_BASE = 'http://localhost:5000'; // change to your backend URL
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3636';
 
 const GenerateReport = () => {
   const [formData, setFormData] = useState({

@@ -1,0 +1,31 @@
+services:
+  backend:
+    build: ./src
+    image: truthmyson/attendance-backend:latest
+    container_name: attendance-backend
+    ports:
+      - "3636:3636" # Map host port 3636 to container port 3636
+    environment:
+      - FLASK_ENV=production # Optional: set Flask environment
+      # You can add any other environment variables needed by backend
+    networks:
+      - attendance-network
+    # No depends_on needed for backend
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        - VITE_API_BASE_URL=http://localhost:3636 # Backend URL accessible from browser
+    image: truthmyson/attendance-frontend:latest
+    container_name: attendance-frontend
+    ports:
+      - "26:80" # Map host port 26 to container's nginx port 80
+    depends_on:
+      - backend # Ensures backend starts first (but not necessarily ready)
+    networks:
+      - attendance-network
+
+networks:
+  attendance-network:
+    driver: bridge
