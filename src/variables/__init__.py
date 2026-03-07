@@ -15,6 +15,6 @@ RESPONSE = {
 URL_FORMAT = 'edit?resourcekey='
 
 # the refenrenced excelfile
-EXCEL_FILENAME = os.path.abspath('src/report.xlsx')
+EXCEL_FILENAME = os.path.abspath('report.xlsx')
 
 print(EXCEL_FILENAME)
