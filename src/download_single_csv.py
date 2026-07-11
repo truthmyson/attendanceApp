@@ -26,12 +26,12 @@ async def download_single_csv(
     # split the url to get the name of the column
     if '/edit?gid=' in url:
         url = url.replace('/edit?gid=', '/export?format=csv&gid=').split(",")
-        col_name = url[-1] if len(url) > 1 else None
-        url = url[0].split("#gid=")[0]
+        col_name = url[-1].strip() if len(url) > 1 else None
+        url = url[0].split("#gid=")[0].strip()
     else:
         url = url.replace('edit?resourcekey=', 'export?format=csv').split(",")
-        col_name = url[-1] if len(url) > 1 else None
-        url = url[0]
+        col_name = url[-1].strip() if len(url) > 1 else None
+        url = url[0].strip()
 
 
     # limit downloads at a time using shared semaphore
