@@ -1,7 +1,7 @@
 import pandas as pd
 from aiohttp import ClientSession
 import asyncio
-from variables import DOWNLOAD_LIMIT, URL_FORMAT
+from variables import DOWNLOAD_LIMIT
 import io
 
 async def download_single_csv(
@@ -23,7 +23,17 @@ async def download_single_csv(
     """
     statusCode = 500
     # url processing
-    url = url.replace(URL_FORMAT, 'export?format=csv')
+    # split the url to get the name of the column
+    if '/edit?gid=' in url:
+        url = url.replace('/edit?gid=', '/export?format=csv&gid=').split(",")
+        col_name = url[-1] if len(url) > 1 else None
+        url = url[0].split("#gid=")[0]
+    else:
+        url = url.replace('edit?resourcekey=', 'export?format=csv').split(",")
+        col_name = url[-1] if len(url) > 1 else None
+        url = url[0]
+
+
     # limit downloads at a time using shared semaphore
     async with asyncio.Semaphore(DOWNLOAD_LIMIT):
         try:
@@ -44,21 +54,22 @@ async def download_single_csv(
 
                     return {
                         'status': 'success',
-                        'excelsheetID': url.split('#gid=')[-1],
-                        'df': df
+                        'excelsheetID': url.split('gid=')[-1],
+                        'df': df,
+                        'col_name': col_name
                     }
                 except Exception as e:
                     return {
                     'status': 'error',
                     'message': f"Error streaming the csv file: {str(e)}",
                     'statusCode': statusCode,
-                    'excelsheetID': url.split('#gid=')[-1]
+                    'excelsheetID': url.split('gid=')[-1]
                 }
         except Exception as e:
             return {
                 'status': 'error',
                 'message': f"Error downloading the excelsheet: {str(e)}",
                 'statusCode': statusCode,
-                'excelsheetID': url.split('#gid=')[-1],
+                'excelsheetID': url.split('gid=')[-1],
                 'url': url
             }

@@ -34,7 +34,7 @@ def exe_generator(result: list[object],
         else:
             # read the first sheet anyway
             df = pd.read_excel(excel_filename)
-            
+        # print all existing column names
         print(df.columns)
 
         for i, data in enumerate(result):
@@ -47,7 +47,11 @@ def exe_generator(result: list[object],
 
                 # make the column name unique so that we can
                 # create and fill the attendance weekly
-                col_name = f"{data['excelsheetID'][-3:]}:{str(i)}"
+                print(data["col_name"])
+                if data["col_name"] is not None:
+                    col_name = data["col_name"]
+                else:
+                    col_name = f"{data['excelsheetID'][-3:]}:{str(i)}"
                 df[col_name] = df[referenced_column].isin(df_downloaded[downloaded_column]).astype(int)
             else:
                 col_name = f"{data['excelsheetID'][-3:]}:{str(i)}"
